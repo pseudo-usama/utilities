@@ -1,7 +1,12 @@
+import os
+
 from utils import *
 from emoji import start as start_emojies
 from calculator import start as start_calc
 
+
+os.system("title My Utility Programs")
+clear_screen()
 
 PROGRAMS = (
     (('emoji', 'em'), start_emojies),
