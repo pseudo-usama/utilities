@@ -2,7 +2,7 @@ from pyperclip import copy as to_clipboard
 
 
 EMOJIES = (
-    (('ques-tion', 'q'), '❓'),
+    (('question', 'q'), '❓'),
 )
 
 
