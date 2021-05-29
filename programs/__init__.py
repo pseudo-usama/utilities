@@ -1,9 +1,11 @@
 from utils import *
 from emoji import start as start_emojies
+from calculator import start as start_calc
 
 
 PROGRAMS = (
     (('emoji', 'em'), start_emojies),
+    (('calculator', 'calc'), start_calc),
 )
 
 
