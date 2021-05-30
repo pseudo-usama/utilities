@@ -1,5 +1,7 @@
 from pyperclip import copy as to_clipboard
 
+from utils import *
+
 
 EMOJIES = (
     (('question', 'q'), '❓'),
@@ -8,19 +10,15 @@ EMOJIES = (
 
 def start():
     while True:
-        command = input('Which emoji you want to copy : ')
-
-        if command == 'exit':
+        emoji = get_input('Which emoji you want to copy', 'Sorry! no such emoji exists', 'emoji', EMOJIES)
+        if emoji is False:
             break
+        copy_emoji(emoji)
 
-        res = list(filter(lambda emoji: command in emoji[0], EMOJIES))
-        if len(res) == 0:
-            print('Sorry! no such emoji exists\n')
-            continue
 
-        requested_emoji = res[0][1]
-        to_clipboard(requested_emoji)
-        print(f'{requested_emoji} is copied to clipboard\n')
+def copy_emoji(emoji):
+    to_clipboard(emoji)
+    print(f'{emoji} is copied to clipboard\n')
 
 
 if __name__ == '__main__':
