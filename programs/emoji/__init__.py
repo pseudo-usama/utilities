@@ -5,6 +5,7 @@ from utils import *
 
 EMOJIES = (
     (('question', 'q'), '❓'),
+    (('think', 'thinking', 'thk'), '🤔'),
 )
 
 
