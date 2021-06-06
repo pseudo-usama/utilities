@@ -3,7 +3,7 @@ This checks the battery time to time
 And if its about to full & plugs in then it will start making sounds
 """
 
-
+from os import system
 import sys
 import  sched
 import time
@@ -11,7 +11,11 @@ from time import sleep
 import psutil
 
 
+system("title Battery checker")
+
+
 WAIT_TIME = 5*60
+WAIT_TIME_IF_BATTERY_IS_ABOUT_TO_CHARGE = 1*60
 
 
 s = sched.scheduler(time.time, time.sleep)
@@ -26,8 +30,9 @@ def chk_battery():
 
     if plugged and bet_per > 90:
         make_beep()
-
-    s.enter(WAIT_TIME, 1, chk_battery)
+        s.enter(WAIT_TIME_IF_BATTERY_IS_ABOUT_TO_CHARGE, 1, chk_battery)
+    else:
+        s.enter(WAIT_TIME, 1, chk_battery)
 
 
 def make_beep():
