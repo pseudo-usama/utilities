@@ -1,19 +1,11 @@
 import os
-import tempfile
+
+from tinydb import TinyDB
 import youtube_dl
 
 
-SONGS = (
-    {
-        'name': 'Hum Pagal Nahin Hai',
-        'file': 'Hum Pagal Nahin Hai.mp3',
-        'link': 'https://www.youtube.com/watch?v=___hMJ3toxM',
-        'languages': ['hindi'],
-        'movie': 'Humshakals',
-        'tags': ['comedy', 'hindi', 'bollywood'],
-    },
-)
-
+INDEXED_DIR = 'f:/songs'
+TEMP_DIR = 'f:/songs/temp'
 
 
 def download_song(link, path):
@@ -31,9 +23,41 @@ def video_to_mp3(file_name, out_file_name):
     os.system(f'ffmpeg -i "{file_name}" "{out_file_name}"')
 
 
-def songs():
-    temp_dir = tempfile.mkdtemp()
-    
-    for song in SONGS:
-        file_name = download_song(song['link'], temp_dir)
-        video_to_mp3(file_name, f'{temp_dir}//{song["file"]}')
+def download_songs_from_tuple(songs):
+    db = TinyDB('db.json')
+
+    for song in songs:
+        video_file_name = download_song(song['link'], TEMP_DIR)
+        audio_file_name = f'{TEMP_DIR}/{song["file"]}'
+        video_to_mp3(video_file_name, audio_file_name)
+
+        os.rename(audio_file_name, f'{INDEXED_DIR}/{song["file"]}')
+        os.remove(video_file_name)
+
+        db.insert(song)
+
+
+def download_songs_from_db():
+    # TODO: Have to implement this
+    pass
+
+
+# Sample tamplate
+SONGS = (
+    {
+        'name': 'name',
+        'file': 'file.mp3',
+        'link': 'link',
+        'languages': ['language'],
+        'artists': ['singer name'],
+        'movie': {
+            'name': 'movie name',
+            'industry': 'hollywood',
+            'cast': ['actors']
+        },
+        'tags': ['some tag'],
+    }
+)
+
+
+download_songs_from_tuple(SONGS)
